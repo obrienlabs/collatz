@@ -16,7 +16,7 @@ public class ComputeTest {
 		Assertions.assertNotNull(sequence);
 		BigInteger expectedMax = BigInteger.valueOf(9232);
 		// Get the highest sequence using the max function on an optional
-		BigInteger actualMax = sequence.stream()
+		BigInteger actualMax = sequence.parallelStream()
 				.max(Comparator.comparing(x -> x))
 				.get();
 		Assertions.assertTrue(actualMax.equals(expectedMax));
