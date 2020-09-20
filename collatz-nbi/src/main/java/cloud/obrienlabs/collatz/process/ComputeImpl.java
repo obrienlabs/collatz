@@ -16,23 +16,32 @@ public class ComputeImpl implements Compute {
 
 	public void iterate(BigInteger start, BigInteger end) {
 		BigInteger current = start;
-		while(current.compareTo(end) < 0) {
+		//while(current.compareTo(end) < 0) {
+		
 			List<BigInteger> list = iterate(current);
-			BigInteger max = list.parallelStream()
+			BigInteger max = list.stream()
+					.parallel()
 					.max(Comparator.comparing(x -> x))
 					.get();
-			int path = list.size();
 			// check maxes
-			if(graph.getMaxPath() < path) {
-				graph.setMaxPath(path);
-				log.info("path: " + path + " for " + current);
+			if(graph.getMaxPath() < list.size()) {
+				graph.setMaxPath(list.size());
+				log.info("path: " + graph.getMaxPath() + " for " + current);
 			}
 			if(graph.getMaxValue().compareTo(max) < 0) {
 				graph.setMaxValue(max);
 				log.info("max: " + max + " for " + current);
 			}
 			current = current.add(TWO);
-		}
+		//}
+	}
+	
+	public BigInteger hailstone(BigInteger current) {
+		if(current.testBit(0)) {
+			return current.multiply(THREE).add(BigInteger.ONE);
+		} else {
+			return current.divide(TWO);
+		}	
 	}
 	
 	@Override
@@ -42,12 +51,7 @@ public class ComputeImpl implements Compute {
 		list.add(start);
 		// until current is 1 - iterate
 		while(!current.equals(BigInteger.ONE)) {
-			if(current.testBit(0)) {
-				current = current.multiply(THREE).add(BigInteger.ONE);
-			} else {
-				current = current.divide(TWO);
-			}
-			//log.info(current.toString());
+			current = hailstone(current);
 			list.add(current);
 		}
 		return list;
@@ -55,7 +59,6 @@ public class ComputeImpl implements Compute {
 
 	public static void main(String[] args) {
 		ComputeImpl impl = new ComputeImpl();
-		//impl.iterate(1024L, 256L);
 		//impl.iterate(BigInteger.valueOf(27));
 		impl.iterate(BigInteger.valueOf(27L), BigInteger.valueOf(1024L));
 		
