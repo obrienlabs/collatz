@@ -11,8 +11,10 @@ public class ComputeTest {
 	
 	@Test
 	public void testSequence27() {
-		Compute compute = new ComputeImpl();
+		ComputeImpl compute = new ComputeImpl();
+		System.out.println();
 		List<BigInteger> sequence = compute.iterate(BigInteger.valueOf(27));
+		//BigInteger sequence = compute.iterate(BigInteger.valueOf(27));
 		Assertions.assertNotNull(sequence);
 		BigInteger expectedMax = BigInteger.valueOf(9232);
 		// Get the highest sequence using the max function on an optional

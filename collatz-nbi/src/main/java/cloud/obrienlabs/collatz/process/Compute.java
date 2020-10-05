@@ -8,6 +8,10 @@ public interface Compute {
 	
 	static BigInteger THREE = BigInteger.valueOf(3);
 	
-	List<BigInteger> iterate(BigInteger start);
+	//List<BigInteger> iterate(BigInteger start);
+	
+	//List<BigInteger> hailstoneList(BigInteger current, BigInteger end);
+	
+	//BigInteger hailstone(BigInteger current);
 	
 }
